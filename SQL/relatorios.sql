@@ -38,5 +38,5 @@ select jogo_titular.fk_titular_id, titular.nome, count(jogo_titular.fk_jogo_id) 
 from jogo_titular 
 inner join titular on titular.id = jogo_titular.fk_titular_id 
 group by titular.nome, jogo_titular.fk_titular_id 
-order by qtd_jogos desc
+order by qtd_jogos desc;
 
