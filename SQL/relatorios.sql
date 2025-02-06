@@ -25,11 +25,12 @@ limit 10;
 
 
 --Mês que cada jogo mais foi vendido
-select distinct on (cj.FK_JOGO_id) 
-    cj.FK_JOGO_id as jogo_id,
+select distinct on (cj.FK_JOGO_id)
+    cj.FK_JOGO_id as jogo_id, jogo.nome as nome_jogo,
     extract(month from cj.data) as mes_mais_vendido,
     count(*) over (partition by cj.FK_JOGO_id, extract(month from cj.data)) as total_vendas
 from cliente_jogo cj
+inner join jogo on cj.FK_JOGO_id = jogo.id
 order by cj.FK_JOGO_id, total_vendas desc;
 
 
