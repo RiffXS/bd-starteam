@@ -21,7 +21,7 @@ inner join cliente as c on c.fk_usuario_id = usuario.id
 inner join cliente_jogo as cj on c.fk_usuario_id = cj.fk_cliente_fk_usuario_id
 group by usuario.id
 order by qtd desc
-limit 10;
+limit 5;
 
 
 --Mês que cada jogo mais foi vendido
