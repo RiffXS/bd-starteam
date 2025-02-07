@@ -31,7 +31,7 @@ select distinct on (cj.FK_JOGO_id)
     count(*) over (partition by cj.FK_JOGO_id, extract(month from cj.data)) as total_vendas
 from cliente_jogo cj
 inner join jogo on cj.FK_JOGO_id = jogo.id
-order by mes_mais_vendido, total_vendas desc;
+order by mes_mais_vendido, cj.FK_JOGO_id, total_vendas desc;
 
 
 --Quantidade de jogos que cada titular lançou
