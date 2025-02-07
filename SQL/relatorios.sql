@@ -25,14 +25,19 @@ limit 5;
 
 
 --Mês que cada jogo mais foi vendido
-select distinct on (cj.FK_JOGO_id)
-    cj.FK_JOGO_id as jogo_id, 
-    jogo.nome as nome_jogo,
-    extract(month from cj.data) as mes_mais_vendido,
-    count(*) over (partition by cj.FK_JOGO_id, extract(month from cj.data)) as total_vendas
+select
+  jogo.nome as nome_jogo,
+  extract(month from cj.data) as mes,
+  count(*) as qtd_vendas
 from cliente_jogo cj
 inner join jogo on cj.FK_JOGO_id = jogo.id
-order by cj.FK_JOGO_id, total_vendas desc;
+inner join (select jogo.id as jogo_id, jogo.nome, count(cj.fk_jogo_id) as qtd from jogo
+inner join cliente_jogo as cj on jogo.id = cj.fk_jogo_id
+group by jogo.id
+order by qtd desc
+limit 5) t5 on cj.FK_JOGO_id = t5.jogo_id
+group by mes, nome_jogo
+order by mes;
 
 
 --Quantidade de jogos que cada titular lançou
